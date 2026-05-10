@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Turbean Space – Happiness as a Place to Grow</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --brown:#3B2314;--brown-mid:#7C4A2D;--brown-light:#C8956A;--cream:#FAF5EE;
+    --cream-dark:#F0E6D3;--green:#2E5929;--gold:#C8963C;--text:#1A0F08;
+    --text-muted:#6B4C36;--white:#FFFFFF;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Georgia',serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+  
+  /* NAV */
+  nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:rgba(250,245,238,0.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(59,35,20,0.12);padding:0 5%}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .nav-logo{font-size:1.2rem;font-weight:700;color:var(--brown);letter-spacing:0.04em;text-decoration:none}
+  .nav-logo span{color:var(--gold)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--text-muted);font-family:Arial,sans-serif;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s}
+  .nav-links a:hover{color:var(--brown)}
+  .nav-cta{background:var(--brown);color:var(--white)!important;padding:8px 20px;border-radius:40px!important;transition:background 0.2s!important}
+  .nav-cta:hover{background:var(--brown-mid)!important;color:var(--white)!important}
+
+  /* HERO */
+  #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;position:relative;overflow:hidden;background:var(--brown)}
+  .hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1a0f08 0%,#3B2314 50%,#5c3322 100%);opacity:1}
+  .hero-img{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;opacity:0.25;mix-blend-mode:overlay}
+  .hero-content{position:relative;z-index:2;max-width:700px}
+  .hero-tag{font-family:Arial,sans-serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+  .hero-title{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;color:var(--white);margin-bottom:1.2rem;font-weight:400}
+  .hero-title em{color:var(--gold);font-style:normal}
+  .hero-sub{font-family:Arial,sans-serif;font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.7;max-width:460px;margin:0 auto 2.5rem}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:var(--gold);color:var(--brown);padding:14px 32px;border-radius:40px;text-decoration:none;font-family:Arial,sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.04em;transition:all 0.2s}
+  .btn-primary:hover{background:#e0a840;transform:translateY(-2px)}
+  .btn-outline{border:1.5px solid rgba(255,255,255,0.45);color:var(--white);padding:14px 32px;border-radius:40px;text-decoration:none;font-family:Arial,sans-serif;font-size:0.88rem;letter-spacing:0.04em;transition:all 0.2s}
+  .btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.08)}
+  .hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,0.4);font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .hero-scroll::after{content:'';display:block;width:1px;height:32px;background:rgba(255,255,255,0.3)}
+
+  /* SECTION COMMONS */
+  section{padding:90px 5%}
+  .section-tag{font-family:Arial,sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.75rem}
+  .section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--brown);line-height:1.15;margin-bottom:1rem;font-weight:400}
+  .section-body{font-family:Arial,sans-serif;font-size:0.95rem;color:var(--text-muted);line-height:1.75;max-width:540px}
+  .divider{width:48px;height:2px;background:var(--gold);margin:1.5rem 0}
+
+  /* ABOUT */
+  #about{background:var(--cream)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1100px;margin:0 auto}
+  .about-imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:220px 180px;gap:12px}
+  .about-img{background:var(--cream-dark);border-radius:12px;overflow:hidden;position:relative}
+  .about-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .about-img.tall{grid-row:span 2}
+  .about-img.placeholder{display:flex;align-items:center;justify-content:center;color:var(--brown-light);font-family:Arial,sans-serif;font-size:0.75rem;text-align:center;padding:12px}
+  .stats-row{display:flex;gap:2.5rem;margin-top:2rem}
+  .stat{text-align:left}
+  .stat-num{font-size:2rem;color:var(--brown);font-weight:400;line-height:1}
+  .stat-label{font-family:Arial,sans-serif;font-size:0.75rem;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;margin-top:4px}
+
+  /* HIGHLIGHTS */
+  #highlights{background:var(--brown);padding:80px 5%}
+  #highlights .section-title{color:var(--white)}
+  #highlights .section-tag{color:var(--gold)}
+  .highlights-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5px;margin-top:3rem;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;max-width:1100px;margin-left:auto;margin-right:auto}
+  .highlight-card{background:rgba(255,255,255,0.05);padding:2rem 1.75rem;transition:background 0.2s;cursor:default}
+  .highlight-card:hover{background:rgba(255,255,255,0.1)}
+  .hi-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
+  .hi-title{font-family:Arial,sans-serif;font-size:0.9rem;font-weight:600;color:var(--white);margin-bottom:0.4rem;letter-spacing:0.02em}
+  .hi-desc{font-family:Arial,sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.6}
+
+  /* MENU */
+  #menu{background:var(--cream-dark)}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1100px;margin:3rem auto 0}
+  .menu-section h3{font-size:1rem;font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:0.1em;color:var(--brown);border-bottom:1px solid rgba(59,35,20,0.15);padding-bottom:0.75rem;margin-bottom:1.25rem;font-weight:600}
+  .menu-item{display:flex;justify-content:space-between;align-items:baseline;padding:0.55rem 0;border-bottom:1px dashed rgba(59,35,20,0.1)}
+  .menu-item:last-child{border-bottom:none}
+  .menu-name{font-family:Arial,sans-serif;font-size:0.88rem;color:var(--text);font-weight:400}
+  .menu-price{font-family:Arial,sans-serif;font-size:0.82rem;color:var(--gold);font-weight:600;white-space:nowrap;margin-left:12px}
+
+  /* GALLERY */
+  #gallery{background:var(--cream);padding:80px 5%}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:240px 180px;gap:12px;max-width:1100px;margin:2.5rem auto 0}
+  .gallery-item{border-radius:10px;overflow:hidden;background:var(--cream-dark);position:relative}
+  .gallery-item.wide{grid-column:span 2}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s}
+  .gallery-item:hover img{transform:scale(1.04)}
+  .gallery-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--brown-light);font-family:Arial,sans-serif;font-size:0.78rem;text-align:center;padding:1rem}
+
+  /* REVIEWS */
+  #reviews{background:var(--cream-dark)}
+  .reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;max-width:1100px;margin:3rem auto 0}
+  .review-card{background:var(--white);border-radius:12px;padding:1.75rem;border:1px solid rgba(59,35,20,0.08)}
+  .stars{color:var(--gold);font-size:0.9rem;margin-bottom:0.75rem;letter-spacing:2px}
+  .review-text{font-family:Arial,sans-serif;font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.2rem}
+  .reviewer{display:flex;align-items:center;gap:10px}
+  .reviewer-avatar{width:36px;height:36px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:0.75rem;font-weight:600;color:var(--brown)}
+  .reviewer-name{font-family:Arial,sans-serif;font-size:0.82rem;font-weight:600;color:var(--brown)}
+  .reviewer-date{font-family:Arial,sans-serif;font-size:0.72rem;color:var(--text-muted)}
+
+  /* LOCATION */
+  #location{background:var(--brown);padding:80px 5%}
+  #location .section-title{color:var(--white)}
+  #location .section-tag{color:var(--gold)}
+  .location-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;max-width:1100px;margin:3rem auto 0;align-items:start}
+  .info-block{margin-bottom:2rem}
+  .info-label{font-family:Arial,sans-serif;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+  .info-val{font-family:Arial,sans-serif;font-size:0.9rem;color:rgba(255,255,255,0.85);line-height:1.7}
+  .hours-row{display:flex;justify-content:space-between;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.7);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
+  .hours-row:last-child{border-bottom:none}
+  .hours-row strong{color:rgba(255,255,255,0.9);font-weight:500}
+  .map-wrap{border-radius:14px;overflow:hidden;height:380px;position:relative;box-shadow:0 8px 40px rgba(0,0,0,0.3)}
+  .map-wrap iframe{width:100%;height:100%;border:none;display:block}
+  .location-cta{margin-top:2rem}
+
+  /* FOOTER */
+  footer{background:#1a0f08;padding:48px 5%;text-align:center}
+  .footer-logo{font-size:1.4rem;color:var(--white);letter-spacing:0.05em;margin-bottom:0.5rem}
+  .footer-logo span{color:var(--gold)}
+  .footer-tagline{font-family:Arial,sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.75rem}
+  .footer-links{display:flex;justify-content:center;gap:2rem;list-style:none;margin-bottom:2rem}
+  .footer-links a{font-family:Arial,sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:0.06em;transition:color 0.2s}
+  .footer-links a:hover{color:var(--gold)}
+  .footer-social{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem}
+  .social-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;transition:all 0.2s}
+  .social-btn:hover{border-color:var(--gold);color:var(--gold)}
+  .footer-copy{font-family:Arial,sans-serif;font-size:0.73rem;color:rgba(255,255,255,0.2)}
+
+  @media(max-width:768px){
+    .nav-links{display:none}
+    .about-grid{grid-template-columns:1fr}
+    .about-imgs{order:-1}
+    .location-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+    .gallery-item.wide{grid-column:span 1}
+    .highlights-grid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Turbean <span>Space</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#location" class="nav-cta">Find Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <img class="hero-img" src="/Users/diahre/Claude_res/hero.jpg" alt="Turbean Space interior" onerror="this.style.display='none'"/>
+  <div class="hero-content">
+    <span class="hero-tag">Gresik, East Java</span>
+    <h1 class="hero-title">Happiness as a<br><em>Place to Grow</em></h1>
+    <p class="hero-sub">A cozy, modern café where great coffee, honest food, and the right atmosphere come together — for work, for friends, for you.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#menu">Explore Menu</a>
+      <a class="btn-outline" href="#location">Find Us</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-imgs">
+      <div class="about-img tall">
+        <img src="/Users/diahre/Claude_res/interior1.jpg" alt="Turbean Space interior" onerror="this.outerHTML='<div class=\'about-img tall placeholder\'>Interior<br>Photo</div>'"/>
+      </div>
+      <div class="about-img">
+        <img src="/Users/diahre/Claude_res/coffee1.jpg" alt="Coffee" onerror="this.outerHTML='<div class=\'about-img placeholder\'>Coffee<br>Photo</div>'"/>
+      </div>
+      <div class="about-img">
+        <img src="/Users/diahre/Claude_res/rooftop.jpg" alt="Rooftop" onerror="this.outerHTML='<div class=\'about-img placeholder\'>Rooftop<br>Photo</div>'"/>
+      </div>
+    </div>
+    <div>
+      <span class="section-tag">Our Story</span>
+      <h2 class="section-title">More than a café — it's your space</h2>
+      <div class="divider"></div>
+      <p class="section-body">Turbean Space sits on Jl. Dr. Soetomo No.33, Gresik — a welcoming spot that balances modern design with a genuinely relaxed atmosphere. Whether you're settling in with a laptop, catching up with friends over croissants, or just here for a quiet moment with a good cup of coffee, this place was made for you.</p>
+      <p class="section-body" style="margin-top:1rem">With indoor seating, a rooftop terrace, free parking, and a playlist that just feels right — Turbean Space is Gresik's best-kept secret. But not for long.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">328+</div><div class="stat-label">Happy Reviews</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Outlets in Gresik</div></div>
+        <div class="stat"><div class="stat-num">4.8★</div><div class="stat-label">Average Rating</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section id="highlights">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="section-tag">Why Come Here</span>
+    <h2 class="section-title">Everything you need in one place</h2>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-card"><span class="hi-icon">☕</span><div class="hi-title">Signature Coffee</div><div class="hi-desc">Americano, Cappuccino, Vanilla Latte, Caramel Latte — all expertly brewed.</div></div>
+    <div class="highlight-card"><span class="hi-icon">🍰</span><div class="hi-title">Dreamy Desserts</div><div class="hi-desc">Crème Brûlée, Pannacotta Klepon, Tiramisu, Pain au Suisse Croissant.</div></div>
+    <div class="highlight-card"><span class="hi-icon">🏙️</span><div class="hi-title">Rooftop Terrace</div><div class="hi-desc">Open-air rooftop seating with a beautiful view — especially magical at dusk.</div></div>
+    <div class="highlight-card"><span class="hi-icon">💻</span><div class="hi-title">Work-Friendly</div><div class="hi-desc">A calm, focused daytime vibe loved by freelancers and students alike.</div></div>
+    <div class="highlight-card"><span class="hi-icon">🚗</span><div class="hi-title">Ample Parking</div><div class="hi-desc">Spacious parking lot — no stress, just arrive and enjoy.</div></div>
+    <div class="highlight-card"><span class="hi-icon">♿</span><div class="hi-title">Accessible</div><div class="hi-desc">Wheelchair-accessible entrance, seating, and parking available.</div></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="section-tag">What We Serve</span>
+    <h2 class="section-title">A menu worth coming back for</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-section">
+      <h3>Coffee &amp; Drinks</h3>
+      <div class="menu-item"><span class="menu-name">Americano</span><span class="menu-price">Rp 25K</span></div>
+      <div class="menu-item"><span class="menu-name">Cappuccino</span><span class="menu-price">Rp 28K</span></div>
+      <div class="menu-item"><span class="menu-name">Vanilla Latte</span><span class="menu-price">Rp 32K</span></div>
+      <div class="menu-item"><span class="menu-name">Caramel Latte</span><span class="menu-price">Rp 32K</span></div>
+      <div class="menu-item"><span class="menu-name">Dark Chocolate Ice</span><span class="menu-price">Rp 30K</span></div>
+    </div>
+    <div class="menu-section">
+      <h3>Desserts &amp; Bakes</h3>
+      <div class="menu-item"><span class="menu-name">Crème Brûlée</span><span class="menu-price">Rp 22K</span></div>
+      <div class="menu-item"><span class="menu-name">Pannacotta Klepon</span><span class="menu-price">Rp 25K</span></div>
+      <div class="menu-item"><span class="menu-name">Tiramisu</span><span class="menu-price">Rp 30K</span></div>
+      <div class="menu-item"><span class="menu-name">Pain au Suisse Croissant</span><span class="menu-price">Rp 28K</span></div>
+    </div>
+    <div class="menu-section">
+      <h3>Food</h3>
+      <div class="menu-item"><span class="menu-name">Beef Bowl Sambal Ijo</span><span class="menu-price">Rp 45K</span></div>
+      <div class="menu-item"><span class="menu-name">Chicken Garlic Salad</span><span class="menu-price">Rp 40K</span></div>
+      <div class="menu-item"><span class="menu-name">Spaghetti Bolognese</span><span class="menu-price">Rp 48K</span></div>
+      <div class="menu-item"><span class="menu-name">Quick Bites &amp; Snacks</span><span class="menu-price">Rp 18K+</span></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem">
+    <a class="btn-primary" href="https://drive.google.com/file/d/1UKhnljM6xEnhCL4QoobbHpSr4eHqeTO8/view" target="_blank" style="display:inline-block">View Full Menu</a>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="section-tag">Gallery</span>
+    <h2 class="section-title">Spaces that feel like yours</h2>
+  </div>
+  <div class="gallery-grid" style="max-width:1100px;margin:2.5rem auto 0">
+    <div class="gallery-item wide">
+      <img src="/Users/diahre/Claude_res/gallery1.jpg" alt="Turbean Space gallery" onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'>Gallery Photo 1</div>'"/>
+    </div>
+    <div class="gallery-item">
+      <img src="/Users/diahre/Claude_res/gallery2.jpg" alt="Turbean Space gallery" onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'>Gallery Photo 2</div>'"/>
+    </div>
+    <div class="gallery-item">
+      <img src="/Users/diahre/Claude_res/gallery3.jpg" alt="Turbean Space gallery" onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'>Gallery Photo 3</div>'"/>
+    </div>
+    <div class="gallery-item wide">
+      <img src="/Users/diahre/Claude_res/gallery4.jpg" alt="Turbean Space gallery" onerror="this.parentElement.innerHTML='<div class=\'gallery-placeholder\'>Gallery Photo 4</div>'"/>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="section-tag">What Locals Say</span>
+    <h2 class="section-title">Real people, honest words</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Very conducive for relaxing while working. It's really beautiful here in the evening. The playlist really suits my ears — the toilet is clean, the vibe is just right."</p>
+      <div class="reviewer"><div class="reviewer-avatar">RS</div><div><div class="reviewer-name">Rahmah S. Febriana</div><div class="reviewer-date">February 2026</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Whoaahh — all recommended! The food, coffee, service, atmosphere — keep up all these good things. The Pain Au Suisse croissant was so nice."</p>
+      <div class="reviewer"><div class="reviewer-avatar">EW</div><div><div class="reviewer-name">Emma Wahib</div><div class="reviewer-date">January 2026</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Cozy and modern, great for working, relaxing, or hanging out. The rooftop seating is lovely. It's calm and inspiring — I really hope they open 24 hours someday!"</p>
+      <div class="reviewer"><div class="reviewer-avatar">HD</div><div><div class="reviewer-name">Harbara Digdaya Haq</div><div class="reviewer-date">December 2025</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Wide parking, futuristic design, great for group meetings. The beverages are the best. I spent 3 hours here for a meeting and didn't want to leave."</p>
+      <div class="reviewer"><div class="reviewer-avatar">AM</div><div><div class="reviewer-name">Mr. Amiril</div><div class="reviewer-date">October 2025</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="section-tag">Find Us</span>
+    <h2 class="section-title">Come take your space</h2>
+  </div>
+  <div class="location-grid">
+    <div>
+      <div class="info-block">
+        <div class="info-label">Address</div>
+        <div class="info-val">Jl. Dr. Soetomo No.33, Ngipik,<br>Karangpoh, Kec. Gresik,<br>Kabupaten Gresik, Jawa Timur 61119</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Phone</div>
+        <div class="info-val">+62 823-3210-6101</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Opening Hours</div>
+        <div class="hours-row"><strong>Monday – Sunday</strong><span>09:00 – 23:00</span></div>
+      </div>
+      <div class="info-block" style="margin-top:2rem">
+        <div class="info-label">Payment</div>
+        <div class="info-val">All major payment methods accepted</div>
+      </div>
+      <div class="location-cta" style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a class="btn-primary" href="https://maps.app.goo.gl/4tt5qLQQN3m83war6" target="_blank">Open in Maps</a>
+        <a class="btn-outline" href="https://wa.me/6282332106101" target="_blank">WhatsApp RSVP</a>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.67!2d112.6455237!3d-7.1617366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd80118b99be27d%3A0x19f6020db6312a5f!2sTurbean%20Space!5e0!3m2!1sen!2sid!4v1746790000000!5m2!1sen!2sid"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Turbean Space location map">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Turbean <span>Space</span></div>
+  <div class="footer-tagline">#TakeYourSpace</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <div class="footer-social">
+    <a class="social-btn" href="https://www.instagram.com/turbeanspace/" target="_blank" title="Instagram">ig</a>
+    <a class="social-btn" href="https://wa.me/6282332106101" target="_blank" title="WhatsApp">wa</a>
+    <a class="social-btn" href="https://www.tiktok.com/search?q=turbeanspace" target="_blank" title="TikTok">tt</a>
+  </div>
+  <div class="footer-copy">© 2026 Turbean Space · Gresik, East Java, Indonesia · A part of Turbean Coffee</div>
+</footer>
+
+</body>
+</html>
